@@ -1,3 +1,6 @@
+import SimpleLightbox from 'simplelightbox';
+import 'simplelightbox/dist/simple-lightbox.min.css';
+
 const images = [
     {
       preview:
@@ -72,7 +75,6 @@ const galleryMarkup = images.map(({ preview, original, description }) => {
         <img
           class="gallery-image"
           src="${preview}"
-          data-source="${original}"
           alt="${description}"
         />
       </a>
@@ -82,15 +84,7 @@ const galleryMarkup = images.map(({ preview, original, description }) => {
 
 galleryContainer.innerHTML = galleryMarkup;
 
-galleryContainer.addEventListener('click', (event) => {
-  event.preventDefault();
-
-  const clickedImage = event.target;
-  if (clickedImage.nodeName !== 'IMG') return;
-
-  const largeImageURL = clickedImage.dataset.source;
-  const instance = basicLightbox.create(`
-    <img src="${largeImageURL}" alt="${clickedImage.alt}" />
-  `);
-  instance.show();
+new SimpleLightbox('.gallery a', {
+  captionsData: 'alt',
+  captionDelay: 250,
 });
